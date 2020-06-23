@@ -197,25 +197,6 @@ size_t SSD1306Device::write(byte c)
 	return 1;
 }
 
-void SSD1306Device::bitmap(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, const uint8_t bitmap[])
-{
-	uint16_t j = 0;
-	uint8_t y, x;
-	// if (y1 % 8 == 0) y = y1 / 8; 	// else y = y1 / 8 + 1;		// tBUG :: this does nothing as y is initialized below
-	//	THIS PARAM rule on y makes any adjustment here WRONG   //usage oled.bitmap(START X IN PIXELS, START Y IN ROWS OF 8 PIXELS, END X IN PIXELS, END Y IN ROWS OF 8 PIXELS, IMAGE ARRAY);
-	for (y = y0; y < y1; y++)
-	{
-		setCursor(x0, y);
-		ssd1306_send_data_start();
-		for (x = x0; x < x1; x++)
-		{
-			ssd1306_send_data_byte(pgm_read_byte(&bitmap[j++]));
-		}
-		ssd1306_send_data_stop();
-	}
-	setCursor(0, 0);
-}
-
 SSD1306Device oled;
 
 // ----------------------------------------------------------------------------

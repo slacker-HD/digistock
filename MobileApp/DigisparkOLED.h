@@ -44,14 +44,11 @@ class SSD1306Device: public Print {
 		void setCursor(uint8_t x, uint8_t y);
 		void fill(uint8_t fill);
 		void clear(void);
-		void bitmap(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, const uint8_t bitmap[]);
 		void ssd1306_send_command_start(void);
 		void ssd1306_send_command_stop(void);
 		void ssd1306_char_f8x16(uint8_t x, uint8_t y, const char ch[]);
 		virtual size_t write(byte c);
   		using Print::write;
-
-
 };
 
 
