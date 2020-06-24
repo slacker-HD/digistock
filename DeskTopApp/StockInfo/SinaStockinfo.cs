@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Text;
 
@@ -33,18 +34,34 @@ namespace StockInfo
         }
         public static string Shangzheng()
         {
-            return StockInfoFromUrl("http://hq.sinajs.cn/list=s_sh000001");
+            return (GetIndex(StockInfoFromUrl("http://hq.sinajs.cn/list=s_sh000001"),1));
         }
         public static string Shenzheng()
         {
-            return StockInfoFromUrl("http://hq.sinajs.cn/list=s_sz399001");
+            return (GetIndex(StockInfoFromUrl("http://hq.sinajs.cn/list=s_sz399001"),1));
         }
 
         public static string HuShen300()
         {
-            return StockInfoFromUrl("http://hq.sinajs.cn/list=sh000300");
+            return (GetIndex(StockInfoFromUrl("http://hq.sinajs.cn/list=sh000300"),3));
         }
-        
 
+        private static string GetIndex(string ReqJson,int Index)
+        {
+            if (ReqJson.Length < 60)
+            {
+                return "???";
+            }
+            else
+            {
+                var str = ReqJson.Split(',');
+                if (str.Length > 3)
+                {
+                   return Convert.ToDecimal(str[Index]).ToString("0.00");
+                }
+                else
+                    return "???";
+            }
+        }
     }
 }

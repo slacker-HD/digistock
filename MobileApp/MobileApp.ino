@@ -1,7 +1,7 @@
 #include "DigisparkOLED.h"
 #include <DigiUSB.h>
 #include "hanzi.h"
-byte refreshtime = 0;
+
 bool needDrawimg = false;
 void setup()
 {
@@ -23,12 +23,6 @@ void loop()
   byte i = 0;
   while (DigiUSB.available())
   {
-    refreshtime++;
-    if (refreshtime > 200)
-    {
-      refreshtime = 0;
-      oled.fill(0x00);
-    }
     content[i] = DigiUSB.read();
     i++;
     if (i == 16)

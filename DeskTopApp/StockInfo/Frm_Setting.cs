@@ -77,9 +77,32 @@ namespace StockInfo
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            byte[] Strbyte = Encoding.GetEncoding("utf-8").GetBytes(DateTime.Now.ToString("yyyy-MM-dd ") + DateTime.Now.ToShortTimeString().ToString() + "         2979.55" + "        11813.53" + "         4138.99");
+            string shangzheng = SinaStockinfo.Shangzheng();
+            string shenzheng = SinaStockinfo.Shenzheng();
+            string hushen300 = SinaStockinfo.HuShen300();
+            string line1 = "", line2 = "", line3 = "", line4 = "";
+            line1 = DateTime.Now.ToString("yyyy-MM-dd ") + DateTime.Now.ToShortTimeString().ToString();
+            for (int i = 0; i < 16 - shangzheng.Length; i++)
+            {
+                line2 += " ";
+            }
+            line2 += shangzheng;
+
+            for (int i = 0; i < 16 - shenzheng.Length; i++)
+            {
+                line3 += " ";
+            }
+            line3 += shenzheng;
+
+            for (int i = 0; i < 16 - hushen300.Length; i++)
+            {
+                line4 += " ";
+            }
+            line4 += hushen300;
+
+            byte[] Strbyte = Encoding.GetEncoding("utf-8").GetBytes(line1 + line2 + line3 + line4);
             _digiSpark.WriteBytes(Strbyte);
-            MessageBox.Show(SinaStockinfo.HuShen300());
+
         }
     }
 }
