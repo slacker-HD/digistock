@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Text;
 using System.Windows.Forms;
-
 
 namespace StockInfo
 {
@@ -74,9 +74,12 @@ namespace StockInfo
             this.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+        private void button1_Click_1(object sender, EventArgs e)
         {
-            _digiSpark.WriteString(DateTime.Now.ToString("yyyy-MM-dd ") + DateTime.Now.ToShortTimeString().ToString() + "1234567890ABCDEF" + "1234567890ABCDEF" + "1234567890ABCDEF");
+            byte[] Strbyte = Encoding.GetEncoding("utf-8").GetBytes(DateTime.Now.ToString("yyyy-MM-dd ") + DateTime.Now.ToShortTimeString().ToString() + "         2979.55" + "        11813.53" + "         4138.99");
+            _digiSpark.WriteBytes(Strbyte);
+            MessageBox.Show(SinaStockinfo.HuShen300());
         }
     }
 }

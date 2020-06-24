@@ -54,7 +54,7 @@ const uint8_t ssd1306_init_sequence[] PROGMEM = {
 
 };
 
-uint8_t oledFont, oledX, oledY = 0;
+uint8_t oledFont=FONT8X16, oledX, oledY = 0;
 
 // Program:    5248 bytes
 
@@ -68,12 +68,8 @@ void SSD1306Device::begin(void)
 	{
 		ssd1306_send_command(pgm_read_byte(&ssd1306_init_sequence[i]));
 	}
-	clear();
-}
-
-void SSD1306Device::setFont(uint8_t font)
-{
-	oledFont = font;
+//	clear();
+  fill(0x00);
 }
 
 void SSD1306Device::ssd1306_send_command_start(void)
@@ -126,10 +122,10 @@ void SSD1306Device::setCursor(uint8_t x, uint8_t y)
 	oledY = y;
 }
 
-void SSD1306Device::clear(void)
-{
-	fill(0x00);
-}
+//void SSD1306Device::clear(void)
+//{
+//	fill(0x00);
+//}
 
 void SSD1306Device::fill(uint8_t fill)
 {
@@ -196,6 +192,27 @@ size_t SSD1306Device::write(byte c)
 #endif
 	return 1;
 }
+
+
+void SSD1306Device::bitmap(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, const uint8_t bitmap[])
+{
+  uint16_t j = 0;
+  uint8_t y, x;
+  // if (y1 % 8 == 0) y = y1 / 8;   // else y = y1 / 8 + 1;   // tBUG :: this does nothing as y is initialized below
+  //  THIS PARAM rule on y makes any adjustment here WRONG   //usage oled.bitmap(START X IN PIXELS, START Y IN ROWS OF 8 PIXELS, END X IN PIXELS, END Y IN ROWS OF 8 PIXELS, IMAGE ARRAY);
+  for (y = y0; y < y1; y++)
+  {
+    setCursor(x0,y);
+    ssd1306_send_data_start();
+    for (x = x0; x < x1; x++)
+    {
+      ssd1306_send_data_byte(pgm_read_byte(&bitmap[j++]));
+    }
+    ssd1306_send_data_stop();
+  }
+  setCursor(0, 0);
+}
+
 
 SSD1306Device oled;
 

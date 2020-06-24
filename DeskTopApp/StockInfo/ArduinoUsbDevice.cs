@@ -174,11 +174,5 @@ namespace StockInfo
             _disposed = true;
         }
         #endregion
-
-        public void WriteString(string Str)
-        {
-            byte[] Strbyte = Encoding.GetEncoding("utf-8").GetBytes(Str);
-            WriteBytes(Strbyte);
-        }
     }
 }
