@@ -56,7 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Digistump.cs" />
+    <Compile Include="ArduinoUsbDevice.cs" />
     <Compile Include="Frm_Setting.cs">
       <SubType>Form</SubType>
     </Compile>

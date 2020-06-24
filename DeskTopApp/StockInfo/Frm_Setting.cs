@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Windows.Forms;
 
 
@@ -7,9 +6,24 @@ namespace StockInfo
 {
     public partial class Frm_Setting : Form
     {
+        private ArduinoUsbDevice _digiSpark;
+        public Frm_Setting(ArduinoUsbDevice digiSpark)
+        {
+            InitializeComponent();
+            _digiSpark = digiSpark;
+        }
+
         public Frm_Setting()
         {
             InitializeComponent();
+        }
+
+        public void ShowTooltip(Object status)
+        {
+            if ((bool)status)
+                nf_config.ShowBalloonTip(3000, "提示", "设备已连接", ToolTipIcon.Info);
+            else
+                nf_config.ShowBalloonTip(3000, "提示", "设备已断开", ToolTipIcon.Info);
         }
 
         private void Frm_Setting_Load(object sender, EventArgs e)
@@ -49,7 +63,7 @@ namespace StockInfo
         {
             if (this.WindowState == FormWindowState.Minimized)
             {
-                e.Cancel = true; 
+                e.Cancel = true;
                 this.Hide();
                 this.ShowInTaskbar = false;
             }
@@ -62,7 +76,7 @@ namespace StockInfo
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Digistump.WriteString("HELLO");
+            _digiSpark.WriteString(DateTime.Now.ToString("yyyy-MM-dd ") + DateTime.Now.ToShortTimeString().ToString() + "1234567890ABCDEF" + "1234567890ABCDEF" + "1234567890ABCDEF");
         }
     }
 }
