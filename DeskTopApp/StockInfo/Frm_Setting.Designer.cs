@@ -33,19 +33,14 @@
             this.nf_config = new System.Windows.Forms.NotifyIcon(this.components);
             this.cm = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mn_quit = new System.Windows.Forms.ToolStripMenuItem();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.Tm_main = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.dgv_data = new System.Windows.Forms.DataGridView();
+            this.Btn_Set = new System.Windows.Forms.Button();
+            this.Dgv_data = new System.Windows.Forms.DataGridView();
             this.codecol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mincol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.maxcol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
             this.cm.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_data)).BeginInit();
-            this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Dgv_data)).BeginInit();
             this.SuspendLayout();
             // 
             // nf_config
@@ -71,99 +66,67 @@
             this.mn_quit.Text = "退出";
             this.mn_quit.Click += new System.EventHandler(this.Mn_quit_Click);
             // 
+            // Tm_main
+            // 
+            this.Tm_main.Enabled = true;
+            this.Tm_main.Interval = 5000;
+            this.Tm_main.Tick += new System.EventHandler(this.Tm_main_Tick);
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.dgv_data, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.Btn_Set, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.Dgv_data, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 64.25926F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35.74074F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(649, 511);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(282, 362);
             this.tableLayoutPanel1.TabIndex = 10;
             // 
-            // dgv_data
+            // Btn_Set
             // 
-            this.dgv_data.AllowUserToAddRows = false;
-            this.dgv_data.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dgv_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.codecol,
-            this.mincol,
-            this.maxcol,
-            this.Column1});
-            this.dgv_data.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv_data.Location = new System.Drawing.Point(4, 4);
-            this.dgv_data.Margin = new System.Windows.Forms.Padding(4);
-            this.dgv_data.Name = "dgv_data";
-            this.dgv_data.RowHeadersWidth = 51;
-            this.dgv_data.RowTemplate.Height = 23;
-            this.dgv_data.Size = new System.Drawing.Size(641, 320);
-            this.dgv_data.TabIndex = 8;
+            this.Btn_Set.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Btn_Set.Location = new System.Drawing.Point(3, 317);
+            this.Btn_Set.Name = "Btn_Set";
+            this.Btn_Set.Size = new System.Drawing.Size(276, 42);
+            this.Btn_Set.TabIndex = 9;
+            this.Btn_Set.Text = "开始";
+            this.Btn_Set.UseVisualStyleBackColor = true;
+            this.Btn_Set.Click += new System.EventHandler(this.Btn_Set_Click);
+            // 
+            // Dgv_data
+            // 
+            this.Dgv_data.AllowUserToResizeColumns = false;
+            this.Dgv_data.AllowUserToResizeRows = false;
+            this.Dgv_data.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Dgv_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Dgv_data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.codecol});
+            this.Dgv_data.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Dgv_data.Location = new System.Drawing.Point(4, 4);
+            this.Dgv_data.Margin = new System.Windows.Forms.Padding(4);
+            this.Dgv_data.Name = "Dgv_data";
+            this.Dgv_data.RowHeadersWidth = 51;
+            this.Dgv_data.RowTemplate.Height = 23;
+            this.Dgv_data.Size = new System.Drawing.Size(274, 306);
+            this.Dgv_data.TabIndex = 8;
             // 
             // codecol
             // 
             this.codecol.HeaderText = "股票代码";
             this.codecol.MinimumWidth = 6;
             this.codecol.Name = "codecol";
-            this.codecol.Width = 160;
-            // 
-            // mincol
-            // 
-            this.mincol.HeaderText = "名称";
-            this.mincol.MinimumWidth = 6;
-            this.mincol.Name = "mincol";
-            this.mincol.Width = 160;
-            // 
-            // maxcol
-            // 
-            this.maxcol.HeaderText = "实时价格";
-            this.maxcol.MinimumWidth = 6;
-            this.maxcol.Name = "maxcol";
-            this.maxcol.Width = 160;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "涨跌幅";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 125;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.button1, 1, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 331);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(643, 177);
-            this.tableLayoutPanel2.TabIndex = 9;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(324, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(93, 33);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.codecol.Width = 125;
             // 
             // Frm_Setting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(649, 511);
+            this.ClientSize = new System.Drawing.Size(282, 362);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Frm_Setting";
@@ -173,8 +136,7 @@
             this.Resize += new System.EventHandler(this.Frm_Setting_Resize);
             this.cm.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_data)).EndInit();
-            this.tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Dgv_data)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -183,15 +145,11 @@
         private System.Windows.Forms.NotifyIcon nf_config;
         private System.Windows.Forms.ContextMenuStrip cm;
         private System.Windows.Forms.ToolStripMenuItem mn_quit;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer Tm_main;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.DataGridView dgv_data;
+        private System.Windows.Forms.DataGridView Dgv_data;
+        private System.Windows.Forms.Button Btn_Set;
         private System.Windows.Forms.DataGridViewTextBoxColumn codecol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mincol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn maxcol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Button button1;
     }
 }
 

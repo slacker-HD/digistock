@@ -14,6 +14,10 @@ void setup()
   oled.println(F("WAITING FOR"));
   oled.setCursor(10, 4);
   oled.println(F("CONNECTING..."));
+  pinMode(5, OUTPUT);
+  pinMode(1, OUTPUT);
+  digitalWrite(5, LOW);
+  digitalWrite(1, LOW);
 }
 
 void loop()

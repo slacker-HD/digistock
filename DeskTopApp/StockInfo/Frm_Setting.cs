@@ -7,6 +7,9 @@ namespace StockInfo
     public partial class Frm_Setting : Form
     {
         private ArduinoUsbDevice _digiSpark;
+        private string[] Codes;
+        private int Showindex = 0;
+
         public Frm_Setting(ArduinoUsbDevice digiSpark)
         {
             InitializeComponent();
@@ -28,6 +31,12 @@ namespace StockInfo
 
         private void Frm_Setting_Load(object sender, EventArgs e)
         {
+            Codes = ConfigHelper.GetCodes().Split(',');
+            Dgv_data.Rows.Clear();
+            foreach (string code in Codes)
+            {
+                Dgv_data.Rows.Add(code);
+            }
         }
 
         private void Nf_config_MouseClick(object sender, MouseEventArgs e)
@@ -74,35 +83,157 @@ namespace StockInfo
             this.Close();
         }
 
-
-        private void button1_Click_1(object sender, EventArgs e)
+        private void Btn_Set_Click(object sender, EventArgs e)
         {
-            string shangzheng = SinaStockinfo.Shangzheng();
-            string shenzheng = SinaStockinfo.Shenzheng();
-            string hushen300 = SinaStockinfo.HuShen300();
-            string line1 = "", line2 = "", line3 = "", line4 = "";
-            line1 = DateTime.Now.ToString("yyyy-MM-dd ") + DateTime.Now.ToShortTimeString().ToString();
-            for (int i = 0; i < 16 - shangzheng.Length; i++)
+            string code = "";
+            for (int i = 0; i < Dgv_data.Rows.Count - 1; i++)
             {
-                line2 += " ";
+                code += Dgv_data.Rows[i].Cells[0].Value + ",";
             }
-            line2 += shangzheng;
-
-            for (int i = 0; i < 16 - shenzheng.Length; i++)
+            if (code.Length > 0)
             {
-                line3 += " ";
+                code = code.Substring(0, code.Length - 1);
             }
-            line3 += shenzheng;
+            ConfigHelper.SaveCodes(code);
+            Codes = ConfigHelper.GetCodes().Split(',');
+            Showindex = 0;
+            this.WindowState = FormWindowState.Minimized;
+        }
 
-            for (int i = 0; i < 16 - hushen300.Length; i++)
+        private void Tm_main_Tick(object sender, EventArgs e)
+        {
+            if (_digiSpark.IsAvailable)
             {
-                line4 += " ";
+                string line1 = "", line2 = "", line3 = "", line4 = "";
+                if (Showindex == 0)
+                {
+                    line1 = DateTime.Now.ToString("yyyy-MM-dd ") + DateTime.Now.ToShortTimeString().ToString();
+                    string[] results = SinaStockinfo.GetFirstScreenvalue();
+                    for (int i = 0; i < 16 - results[0].Length; i++)
+                    {
+                        line2 += " ";
+                    }
+                    line2 += results[0];
+                    for (int i = 0; i < 16 - results[1].Length; i++)
+                    {
+                        line3 += " ";
+                    }
+                    line3 += results[1];
+                    for (int i = 0; i < 16 - results[2].Length; i++)
+                    {
+                        line4 += " ";
+                    }
+                    line4 += results[2];
+                    Showindex++;
+                }
+                else
+                {
+                    if (Codes.Length - (Showindex - 1) * 4 >= 4)
+                    {
+                        string[] results = SinaStockinfo.Getvalue(Codes[(Showindex - 1) * 4] + "," + Codes[(Showindex - 1) * 4 + 1] + "," + Codes[(Showindex - 1) * 4 + 2] + "," + Codes[(Showindex - 1) * 4 + 3]);
+                        line1 = Codes[(Showindex - 1) * 4];
+                        for (int i = 0; i < 16 - results[0].Length - Codes[(Showindex - 1) * 4].Length; i++)
+                        {
+                            line1 += " ";
+                        }
+                        line1 += results[0];
+
+                        line2 = Codes[(Showindex - 1) * 4 + 1];
+                        for (int i = 0; i < 16 - results[1].Length - Codes[(Showindex - 1) * 4 + 1].Length; i++)
+                        {
+                            line2 += " ";
+                        }
+                        line2 += results[1];
+
+                        line3 = Codes[(Showindex - 1) * 4 + 2];
+                        for (int i = 0; i < 16 - results[2].Length - Codes[(Showindex - 1) * 4 + 2].Length; i++)
+                        {
+                            line3 += " ";
+                        }
+                        line3 += results[2];
+
+                        line4 = Codes[(Showindex - 1) * 4 + 3];
+                        for (int i = 0; i < 16 - results[2].Length - Codes[(Showindex - 1) * 4 + 3].Length; i++)
+                        {
+                            line4 += " ";
+                        }
+                        line4 += results[3];
+
+                        if ((Showindex - 1) * 4 + 4 >= Codes.Length)
+                        {
+                            Showindex = 0;
+                        }
+                        else
+                        {
+                            Showindex++;
+                        }
+                    }
+                    else if (Codes.Length - (Showindex - 1) * 4 == 3)
+                    {
+                        string[] results = SinaStockinfo.Getvalue(Codes[(Showindex - 1) * 4] + "," + Codes[(Showindex - 1) * 4 + 1] + "," + Codes[(Showindex - 1) * 4 + 2]);
+                        line1 = Codes[(Showindex - 1) * 4];
+                        for (int i = 0; i < 16 - results[0].Length - Codes[(Showindex - 1) * 4].Length; i++)
+                        {
+                            line1 += " ";
+                        }
+                        line1 += results[0];
+
+                        line2 = Codes[(Showindex - 1) * 4 + 1];
+                        for (int i = 0; i < 16 - results[1].Length - Codes[(Showindex - 1) * 4 + 1].Length; i++)
+                        {
+                            line2 += " ";
+                        }
+                        line2 += results[1];
+
+                        line3 = Codes[(Showindex - 1) * 4 + 2];
+                        for (int i = 0; i < 16 - results[2].Length - Codes[(Showindex - 1) * 4 + 2].Length; i++)
+                        {
+                            line3 += " ";
+                        }
+                        line3 += results[2];
+                        line4 = "                ";
+                        Showindex = 0;
+                    }
+                    else if (Codes.Length - (Showindex - 1) * 4 == 2)
+                    {
+                        string[] results = SinaStockinfo.Getvalue(Codes[(Showindex - 1) * 4] + "," + Codes[(Showindex - 1) * 4 + 1]);
+                        line1 = Codes[(Showindex - 1) * 4];
+                        for (int i = 0; i < 16 - results[0].Length - Codes[(Showindex - 1) * 4].Length; i++)
+                        {
+                            line1 += " ";
+                        }
+                        line1 += results[0];
+
+                        line2 = Codes[(Showindex - 1) * 4 + 1];
+                        for (int i = 0; i < 16 - results[1].Length - Codes[(Showindex - 1) * 4 + 1].Length; i++)
+                        {
+                            line2 += " ";
+                        }
+                        line2 += results[1];
+
+                        line3 = "                ";
+                        line4 = "                ";
+                        Showindex = 0;
+                    }
+                    else
+                    {
+                        string[] results = SinaStockinfo.Getvalue(Codes[(Showindex - 1) * 4]);
+                        line1 = Codes[(Showindex - 1) * 4];
+                        for (int i = 0; i < 16 - results[0].Length - Codes[(Showindex - 1) * 4].Length; i++)
+                        {
+                            line1 += " ";
+                        }
+                        line1 += results[0];
+                        line2 = "                ";
+                        line3 = "                ";
+                        line4 = "                ";
+                        Showindex = 0;
+                    }
+                }
+
+                byte[] Strbyte = Encoding.GetEncoding("utf-8").GetBytes(line1 + line2 + line3 + line4);
+                _digiSpark.WriteBytes(Strbyte);
             }
-            line4 += hushen300;
-
-            byte[] Strbyte = Encoding.GetEncoding("utf-8").GetBytes(line1 + line2 + line3 + line4);
-            _digiSpark.WriteBytes(Strbyte);
-
         }
     }
 }
