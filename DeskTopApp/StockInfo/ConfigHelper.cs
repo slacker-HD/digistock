@@ -10,7 +10,7 @@ namespace StockInfo
         {
             try
             {
-                return ConfigurationManager.AppSettings["Codes"];
+                return ConfigurationManager.AppSettings["Codes"] ?? "";
             }
             catch
             {
